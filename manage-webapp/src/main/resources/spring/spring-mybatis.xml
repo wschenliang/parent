@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+    <!-- spring构建sqlSessionFactory -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+        <!--之所以用SqlSessionFactoryBean是因为这是spring得-->
+        <!--数据源配置（必须）-->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 指定mybatis的全局配置文件 注：Mybatis-config.xml中也有数据源配置，但是这里还是必须得重新配置-->
+        <property name="configLocation" value="classpath:mybatis/Mybatis-config.xml"/>
+        <!--mapper.xml文件交给spring管理 注：以前在Mybatis-config.xml中管理-->
+        <property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
+        <!--将起别名也交给spring管理-->
+        <property name="typeAliasesPackage" value="com.snail.crawler.pojo"/>
+
+    </bean>
+
+    <!-- mapper接口的包扫描 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.snail.crawler.mapper" />
+    </bean>
+
+</beans>

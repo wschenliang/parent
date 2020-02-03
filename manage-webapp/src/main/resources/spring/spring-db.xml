@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClass}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
+    <!--开启对service层得注解扫描-->
+    <context:component-scan base-package="com.snail.crawler.service"/>
+
+    <!--开启事务管理-->
+    <!--定义事务管理器-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <!--数据源注入（必须）-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置通知，绑定事务管理器-->
+    <tx:advice id="dbTxAdvice" transaction-manager="transactionManager">
+        <!--配置事务属性-->
+        <tx:attributes>
+            <!--以下列名称开头的方法支持事务，事务具有传递性-->
+            <tx:method name="persist*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="create*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="merge*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="remove*" propagation="REQUIRED" />
+
+            <!--以下列名称开头的方法为只读事务-->
+            <tx:method name="refresh*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="count*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="list*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="exist*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="project*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="validate*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="initialize*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="is*" propagation="REQUIRED" read-only="true" />
+
+            <!-- 其它方法可以通过注解自定义事务 -->
+            <tx:method name="*" propagation="SUPPORTS"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--面向切面管理通知-->
+    <aop:config>
+        <aop:pointcut id="dbTxPointcut" expression="execution(* com.snail.crawler.service.impl.*.*(..))"/>
+        <aop:advisor advice-ref="dbTxAdvice" pointcut-ref="dbTxPointcut"/>
+    </aop:config>
+
+</beans>

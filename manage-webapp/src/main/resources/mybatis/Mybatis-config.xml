@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 引入外部资源文件，resource：相对路径，url：绝对路径 作用于下面连接数据库 -->
+    <properties resource="jdbc.properties" />
+    <settings>
+        <!--开启驼峰匹配 作用于映射文件中将数据库命名转化为驼峰命名-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <plugins>
+        <!-- mybatis分页插件 -->
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"/>
+            <!-- 设置为true时，使用RowBounds分页会进行count查询 -->
+            <property name="rowBoundsWithCount" value="true"/>
+        </plugin>
+
+        <!--配置通用mapper插件-->
+        <plugin interceptor="com.github.abel533.mapperhelper.MapperInterceptor">
+            <!--主键自增回写方法，默认MYSQL-->
+            <property name="IDENTITY" value="MYSQL"/>
+            <!--通用mapper接口，多个接口逗号隔开-->
+            <property name="mappers" value="com.github.abel533.mapper.Mapper"/>
+        </plugin>
+    </plugins>
+
+</configuration>
