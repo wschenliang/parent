@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.snail.crawler.mapper.UserMapper">
-    <select id="selectUserById" resultType="com.snail.crawler.pojo.User">
+    <select id="selectUserById" resultType="com.rongqi.manage.pojo.User">
         select * from crawler_user where id = #{id}
     </select>
 
-    <select id="getUserByAccount" resultType="com.snail.crawler.pojo.User">
+    <select id="getUserByAccount" resultType="com.rongqi.manage.pojo.User">
         SELECT * from crawler_user where account = #{account}
     </select>
 
