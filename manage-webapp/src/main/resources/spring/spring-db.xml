@@ -20,7 +20,7 @@
     </bean>
 
     <!--开启对service层得注解扫描-->
-    <context:component-scan base-package="com.rongqi"/>
+    <context:component-scan base-package="com.rongqi.manage.service"/>
 
     <!--开启事务管理-->
     <!--定义事务管理器-->
@@ -64,7 +64,7 @@
     <!--面向切面管理通知-->
     <aop:config>
 <!--        <aop:pointcut id="dbTxPointcut" expression="execution(* com.rongqi.crawler.service.impl.*.*(..))"/>-->
-        <aop:pointcut id="dbTxPointcut" expression="execution(* com.rongqi.*.*(..))"/>
+        <aop:pointcut id="dbTxPointcut" expression="execution(* com.rongqi.manage.service.*.*(..))"/>
         <aop:advisor advice-ref="dbTxAdvice" pointcut-ref="dbTxPointcut"/>
     </aop:config>
 

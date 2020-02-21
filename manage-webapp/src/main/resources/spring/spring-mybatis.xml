@@ -14,13 +14,13 @@
         <!--mapper.xml文件交给spring管理 注：以前在Mybatis-config.xml中管理-->
         <property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
         <!--将起别名也交给spring管理-->
-        <property name="typeAliasesPackage" value="com.snail.crawler.pojo"/>
+        <property name="typeAliasesPackage" value="com.rongqi.manage.pojo"/>
 
     </bean>
 
     <!-- mapper接口的包扫描 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.snail.crawler.mapper" />
+        <property name="basePackage" value="com.rongqi.manage.mapper" />
     </bean>
 
 </beans>
