@@ -1,7 +1,6 @@
-package com.rongqi.manage.mapper;
+package com.rongqi.manage.service;
 
-import com.rongqi.manage.pojo.User;
-import org.apache.ibatis.annotations.Param;
+import com.rongqi.manage.pojo.CompanyDetail;
 
 /**
  * @author chenliang
@@ -11,6 +10,6 @@ import org.apache.ibatis.annotations.Param;
  * ------------------------------------------------------
  * 2020-1-6   chenliang     1.0.0          create
  */
-public interface UserMapper {
-    User getUserByAccount(@Param("account") String account);
+public interface ICompanyService {
+    CompanyDetail getCompanyDetail();
 }
